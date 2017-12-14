@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>SystemJS</title>
+
+	<script src="node_modules/systemjs/dist/system.js"></script>
+	<script src="node_modules/typescript/lib/typescript.js"></script>
+	<script src="node_modules/zone.js/dist/zone.js"></script>
+</head>
+<body>
+
+<app_one>Loading app one...</app_one>
+<app_two>Loading app two...</app_two>
+
+<script>
+	System.config({
+		packages: {
+			ts: {
+				main: "lib/plugin.js"
+			},
+			typescript: {
+				main: "lib/typescript.js",
+				meta: {
+					"lib/typescript.js": {
+						exports: "ts"
+					}
+				}
+			},
+			"@angular/platform-browser-dynamic": {
+				main: "bundles/platform-browser-dynamic.umd.js"
+			},
+			"@angular/platform-browser": {
+				main: "bundles/platform-browser.umd.js"
+			},
+			"@angular/core": {
+				main: "bundles/core.umd.js"
+			},
+			"@angular/common": {
+				main: "bundles/common.umd.js"
+			},
+			"@angular/compiler": {
+				main: "bundles/compiler.umd.js"
+			},
+			tslib: {
+				main: "tslib.es6.js"
+			},
+			rxjs: {
+				defaultExtension: "js"
+			},
+			app_one: {defaultExtension: "ts"},
+			app_two: {defaultExtension: "ts"}
+		},
+		map: {
+			ts: "node_modules/plugin-typescript",
+			typescript: "node_modules/typescript",
+			"@angular": "node_modules/@angular",
+			tslib: "node_modules/tslib",
+			rxjs: "node_modules/rxjs"
+		},
+		transpiler: "ts"
+	});
+
+	System.import("app_one/main").then(null, console.error.bind(console));
+	System.import("app_two/main").then(null, console.error.bind(console));
+
+</script>
+
+</body>
+</html>
