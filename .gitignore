@@ -2,7 +2,12 @@
 
 .editorconfig
 ts.localhost.iml
+
 package-lock.json
+/common/package-lock.json
+/angular1/package-lock.json
+/angular2/package-lock.json
+/angular4/package-lock.json
 
 # compiled output
 /dist
@@ -10,7 +15,10 @@ package-lock.json
 /out-tsc
 
 # dependencies
-/node_modules
+/common/node_modules
+/angular1/node_modules
+/angular2/node_modules
+/angular4/node_modules
 
 # IDEs and editors
 /.idea

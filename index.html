@@ -3,16 +3,40 @@
 <head>
 	<meta charset="UTF-8">
 	<title>SystemJS</title>
-	<script src="node_modules/systemjs/dist/system.js"></script>
-	<script src="node_modules/zone.js/dist/zone.js"></script>
+	<script src="common/node_modules/lodash/lodash.js"></script>
+	<script src="common/node_modules/systemjs/dist/system.js"></script>
+
+	<!--<script src="angular2/node_modules/zone.js/dist/zone.js"></script>-->
+	<script src="angular4/node_modules/zone.js/dist/zone.js"></script>
 </head>
+
+<style>
+	.appContainer {
+		display: block;
+	}
+</style>
 <body>
 
-<app_one>Loading app one...</app_one>
-<app_two>Loading app two...</app_two>
+To start app do next:
+<ul>
+	<li>run <b>npm install</b> inside common/ folder</li>
+	<li>run <b>npm install</b> inside angular2/ folder</li>
+	<li>run <b>npm install</b> inside angular4/ folder</li>
+</ul>
+
+<ang2_app_one class="appContainer">Loading ang2 app one...</ang2_app_one>
+<ang2_app_two class="appContainer">Loading ang2 app two...</ang2_app_two>
+
+<ang4_app_one class="appContainer">Loading ang4 app one...</ang4_app_one>
+<ang4_app_two class="appContainer">Loading ang4 app two...</ang4_app_two>
 
 <script>
-	System.config({
+
+	var
+		runAngular2 = true,
+		runAngular4 = false;
+
+	var systemJsConfig = {
 		packages: {
 			ts: {
 				main: "lib/plugin.js"
@@ -24,7 +48,50 @@
 						exports: "ts"
 					}
 				}
+			}
+		},
+		map: {
+			ts: "common/node_modules/plugin-typescript",
+			typescript: "common/node_modules/typescript"
+		},
+		transpiler: "ts"
+	};
+
+	if (runAngular2) {
+		systemJsConfig.packages = _.extend(systemJsConfig.packages, {
+			"@angular/platform-browser-dynamic": {
+				main: "bundles/platform-browser-dynamic.umd.js"
 			},
+			"@angular/platform-browser": {
+				main: "bundles/platform-browser.umd.js"
+			},
+			"@angular/core": {
+				main: "bundles/core.umd.js"
+			},
+			"@angular/common": {
+				main: "bundles/common.umd.js"
+			},
+			"@angular/compiler": {
+				main: "bundles/compiler.umd.js"
+			},
+			rxjs: {
+				defaultExtension: "js"
+			},
+			ang2_app_one: {defaultExtension: "ts"},
+			ang2_app_two: {defaultExtension: "ts"}
+		});
+
+		systemJsConfig.map = _.extend(systemJsConfig.map, {
+			"@angular": "angular2/node_modules/@angular",
+			tslib: "angular2/node_modules/tslib",
+			rxjs: "angular2/node_modules/rxjs",
+			ang2_app_one: "angular2/app_one",
+			ang2_app_two: "angular2/app_two"
+		});
+	}
+
+	if (runAngular4) {
+		systemJsConfig.packages = _.extend(systemJsConfig.packages, {
 			"@angular/platform-browser-dynamic": {
 				main: "bundles/platform-browser-dynamic.umd.js"
 			},
@@ -46,21 +113,29 @@
 			rxjs: {
 				defaultExtension: "js"
 			},
-			app_one: {defaultExtension: "ts"},
-			app_two: {defaultExtension: "ts"}
-		},
-		map: {
-			ts: "node_modules/plugin-typescript",
-			typescript: "node_modules/typescript",
-			"@angular": "node_modules/@angular",
-			tslib: "node_modules/tslib",
-			rxjs: "node_modules/rxjs"
-		},
-		transpiler: "ts"
-	});
+			ang4_app_one: {defaultExtension: "ts"},
+			ang4_app_two: {defaultExtension: "ts"}
+		});
 
-	System.import("app_one/main").then(null, console.error.bind(console));
-	System.import("app_two/main").then(null, console.error.bind(console));
+		systemJsConfig.map = _.extend(systemJsConfig.map, {
+			"@angular": "angular4/node_modules/@angular",
+			tslib: "angular4/node_modules/tslib",
+			rxjs: "angular4/node_modules/rxjs",
+			ang4_app_one: "angular4/app_one",
+			ang4_app_two: "angular4/app_two"
+		});
+	}
+
+	System.config(systemJsConfig);
+
+	if (runAngular2) {
+		System.import("ang2_app_one/main").then(null, console.error.bind(console));
+	}
+
+	if (runAngular4) {
+		System.import("ang4_app_one/main").then(null, console.error.bind(console));
+		System.import("ang4_app_two/main").then(null, console.error.bind(console));
+	}
 
 </script>
 
