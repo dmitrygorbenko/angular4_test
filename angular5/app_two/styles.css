@@ -1,0 +1,11 @@
+
+.ang5_app_two {
+	padding: 5px;
+}
+
+.ang5_app_two .items {
+	display: inline-block;
+	background: #9ff960;
+	margin-bottom: 10px;
+	padding: 10px;
+}

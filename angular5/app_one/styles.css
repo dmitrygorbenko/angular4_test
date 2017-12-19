@@ -1,0 +1,22 @@
+
+.ang5_app_one {
+	background-color: #f7f7c2;
+	padding: 5px;
+}
+
+.ang5_app_one .items {
+	display: inline-block;
+	background: #9ff960;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+.ang5_app_one .anotherAppTitle {
+	margin-top: 10px;
+}
+
+.ang5_app_one .anotherAppContainer {
+	margin: 20px 20px;
+	padding: 20px 10px;
+	background-color: #f5d8d8;
+}

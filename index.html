@@ -8,10 +8,13 @@
 
 	<!--<script src="angular2/node_modules/zone.js/dist/zone.js"></script>-->
 
+	<!--
 	<script src="angular4/node_modules/zone.js/dist/zone.js"></script>
 	<script src="angular4/node_modules/reflect-metadata/Reflect.js"></script>
+	-->
 
-	<!--<script src="angular5/node_modules/zone.js/dist/zone.js"></script>-->
+	<script src="angular5/node_modules/zone.js/dist/zone.js"></script>
+	<script src="angular5/node_modules/reflect-metadata/Reflect.js"></script>
 </head>
 
 <style>
@@ -21,27 +24,13 @@
 </style>
 <body>
 
-To start app do next:
-<ul>
-	<li>run <b>npm install</b> inside common/ folder</li>
-	<li>run <b>npm install</b> inside angular2/ folder</li>
-	<li>run <b>npm install</b> inside angular4/ folder</li>
-</ul>
-
-<ang2_app_one class="appContainer">Loading ang2 app one...</ang2_app_one>
-<ang2_app_two class="appContainer">Loading ang2 app two...</ang2_app_two>
-
-<ang4_app_one class="appContainer">Loading ang4 app one...</ang4_app_one>
-<ang4_app_two class="appContainer">Loading ang4 app two...</ang4_app_two>
-
 <ang5_app_one class="appContainer">Loading ang5 app one...</ang5_app_one>
-<ang5_app_two class="appContainer">Loading ang5 app two...</ang5_app_two>
 
 <script>
 
 	var
 		runAngular2 = false,
-		runAngular4 = true,
+		runAngular4 = false,
 		runAngular5 = true;
 
 	var systemJsConfig = {
@@ -62,7 +51,19 @@ To start app do next:
 			ts: "common/node_modules/plugin-typescript",
 			typescript: "common/node_modules/typescript"
 		},
-		transpiler: "ts"
+		transpiler: "ts",
+		typescriptOptions: {
+			declaration: false,
+			emitDecoratorMetadata: true,
+			experimentalDecorators: true,
+			noImplicitAny: true,
+			removeComments: false,
+			sourceMap: true,
+			target: "es5",
+			typeRoots: [
+				"node_modules/@types"
+			]
+		}
 	};
 
 	if (runAngular2) {
@@ -95,42 +96,6 @@ To start app do next:
 			rxjs: "angular2/node_modules/rxjs",
 			ang2_app_one: "angular2/app_one",
 			ang2_app_two: "angular2/app_two"
-		});
-	}
-
-	if (runAngular5) {
-		systemJsConfig.packages = _.extend(systemJsConfig.packages, {
-			"@angular/platform-browser-dynamic": {
-				main: "bundles/platform-browser-dynamic.umd.js"
-			},
-			"@angular/platform-browser": {
-				main: "bundles/platform-browser.umd.js"
-			},
-			"@angular/core": {
-				main: "bundles/core.umd.js"
-			},
-			"@angular/common": {
-				main: "bundles/common.umd.js"
-			},
-			"@angular/compiler": {
-				main: "bundles/compiler.umd.js"
-			},
-			tslib: {
-				main: "tslib.es6.js"
-			},
-			rxjs: {
-				defaultExtension: "js"
-			},
-			ang5_app_one: {defaultExtension: "ts"},
-			ang5_app_two: {defaultExtension: "ts"}
-		});
-
-		systemJsConfig.map = _.extend(systemJsConfig.map, {
-			"@angular": "angular5/node_modules/@angular",
-			tslib: "angular5/node_modules/tslib",
-			rxjs: "angular5/node_modules/rxjs",
-			ang5_app_one: "angular5/app_one",
-			ang5_app_two: "angular5/app_two"
 		});
 	}
 
@@ -170,6 +135,45 @@ To start app do next:
 		});
 	}
 
+	if (runAngular5) {
+		systemJsConfig.packages = _.extend(systemJsConfig.packages, {
+			"@angular/platform-browser-dynamic": {
+				main: "bundles/platform-browser-dynamic.umd.js"
+			},
+			"@angular/platform-browser": {
+				main: "bundles/platform-browser.umd.js"
+			},
+			"@angular/core": {
+				main: "bundles/core.umd.js"
+			},
+			"@angular/common": {
+				main: "bundles/common.umd.js"
+			},
+			"@angular/compiler": {
+				main: "bundles/compiler.umd.js"
+			},
+			"@angular/forms": {
+				main: "bundles/forms.umd.js"
+			},
+			tslib: {
+				main: "tslib.es6.js"
+			},
+			rxjs: {
+				defaultExtension: "js"
+			},
+			ang5_app_one: {defaultExtension: "ts"},
+			ang5_app_two: {defaultExtension: "ts"}
+		});
+
+		systemJsConfig.map = _.extend(systemJsConfig.map, {
+			"@angular": "angular5/node_modules/@angular",
+			tslib: "angular5/node_modules/tslib",
+			rxjs: "angular5/node_modules/rxjs",
+			ang5_app_one: "angular5/app_one",
+			ang5_app_two: "angular5/app_two"
+		});
+	}
+
 	System.config(systemJsConfig);
 
 	if (runAngular2) {
@@ -183,7 +187,6 @@ To start app do next:
 
 	if (runAngular5) {
 		System.import("ang5_app_one/main").then(null, console.error.bind(console));
-		System.import("ang5_app_two/main").then(null, console.error.bind(console));
 	}
 
 </script>

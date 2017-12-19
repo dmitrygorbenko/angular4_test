@@ -1,5 +1,29 @@
-<div style="text-align:center;">
-  <h1>
-    {{ title }}
-  </h1>
+<div class="ang5_app_one">
+	<h1 style="text-align:center;">
+		{{ title }}
+	</h1>
+
+	<div class="list">
+		<div>
+			List of items from App1:
+		</div>
+		<div class="items">
+			<div *ngFor="let item of items">
+				* {{ item }}
+			</div>
+			<div *ngIf="items.length === 0">
+				* no items *
+			</div>
+		</div>
+	</div>
+
+	Add a new item you can here:
+	<input [(ngModel)]="newItem" placeholder="type the item">
+	<button (click)="onAdd(newItem)">Add new item</button>
+
+	<div class="anotherAppTitle">
+		Next, goes container for second application:
+	</div>
+	<div id="ang5_app_two" class="anotherAppContainer">Loading ang5 app two...</div>
+
 </div>
