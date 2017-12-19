@@ -8,6 +8,7 @@ import {Component, ApplicationRef} from '@angular/core';
 })
 export class AppComponent {
 
+	private _app;
 	title = 'This is Angular 5 app #2';
 	newItem = "";
 	items = [];
@@ -23,7 +24,7 @@ export class AppComponent {
 
 		this.items.push(this.newItem);
 		this.newItem = "";
-		this._app.tick();
+		//this._app.tick();
 	}
 
 }
